@@ -27,6 +27,8 @@ func main () {
 	routes.LoginRoute(v1Route)	
 	//Upload Endpoint
 	routes.UploadRoute(v1Route)
+	//Hero Endpoint 
+	routes.HeroRoute(v1Route)
 	
 
 	//Running Server
