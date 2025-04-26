@@ -12,6 +12,6 @@ type HeroModel struct {
 	Profession string `json:"profession"`
 	Description string `json:"description"`
 	Location string `json:"location"`
-	IsAvailable bool `json:"is_available"`
+	IsAvailable *bool `json:"is_available"`
 	ImageUrl string `json:"image_url"`
 }

@@ -1,24 +1,78 @@
 package hero
 
 import (
-	"personal-web-be/config"
+	model "personal-web-be/models"
+	"personal-web-be/services"
 
 	"github.com/gofiber/fiber/v2"
 )
 
-
-
-func  HeroHandler(ctx *fiber.Ctx) error  {
-	//var hero model.HeroModel
-	var result string
-
-	err := config.SupaClient.DB.From("hero").Select("surname").Single().Execute(&result)
+func HeroHandlerGet(ctx *fiber.Ctx)  error {
+	result, err := services.GetServiceHero() 
 	if err != nil {
-		return err
+		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"error" : err.Error(),
+		})
+	}
+	return ctx.Status(fiber.StatusOK).JSON(fiber.Map{
+		"message" : "Success Get Hero",
+			"data" : result,
+	})	
+}
+
+
+
+func HeroHandlerUpdate(ctx *fiber.Ctx) error  {
+	var body model.HeroModel
+
+	if err := ctx.BodyParser(&body); err != nil{
+		return ctx.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"error" : "invalid Request Body", 
+		})
+	}
+
+	updatedBody := make(map[string]interface{})
+
+	if body.Surname != "" {
+		updatedBody["surname"] = body.Surname
+	}
+	if body.Profession != "" {
+		updatedBody["profession"] = body.Profession
 	}
 
 
+	if body.Surname != "" {
+		updatedBody["description"] = body.Description
+	}
+	if body.Location != "" {
+		updatedBody["location"] = body.Location
+	}
+
+	if body.IsAvailable != nil {
+		updatedBody["isavailable"] = *body.IsAvailable
+	}
+
+
+	if body.ImageUrl != "" {
+		updatedBody["imageurl"] = body.ImageUrl
+	}
+
+
+	if len(updatedBody) == 0 {
+		return ctx.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"error": "no valid fields to update",
+		})
+	}
+
+	result , err := services.UpdateServiceHero(updatedBody)
+	if err != nil {
+		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"error" : err.Error(),
+		})
+	}
+	
 	return ctx.JSON(fiber.Map{
+		"message" : "Success Update",
 		"data" : result,
 	})
 }
