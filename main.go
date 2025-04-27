@@ -24,7 +24,6 @@ func main () {
 	app := fiber.New()
 
 	//init CORS
-
 	app.Use(cors.New())
 
 	//Endpoint V1 
@@ -40,6 +39,8 @@ func main () {
 	routes.StackRoute(v1Route)
 	//Work Experience Endpoint
 	routes.WorkRoute(v1Route)
+	//Project Endpoint
+	routes.ProjectRoute(v1Route)
 
 	//Running Server
 	app.Listen(":3000")

@@ -32,6 +32,18 @@ func CreateWorkService(work model.WorkModel)  error {
 	return nil
 }
 
+func UpdateWorkService(id uuid.UUID,work map[string]interface{}) error {
+	finalId := id.String()
+	var result map[string]interface{}
+	err := config.SupaClient.DB.From("work_experience").Update(work).Eq("id", finalId).Execute(&result) 
+	if err != nil {
+		return nil
+	}
+
+	return nil
+}
+
+
 
 
 func DeleteWorkService(id uuid.UUID) error {

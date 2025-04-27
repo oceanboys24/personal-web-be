@@ -1,4 +1,4 @@
-package work
+package project
 
 import (
 	model "personal-web-be/models"
@@ -9,10 +9,8 @@ import (
 )
 
 
-
-
-func GetWorkHandler(ctx *fiber.Ctx) error  {
-	data, err := services.GetWorkService()
+func GetProjectHandler(ctx *fiber.Ctx) error  {
+	data, err := services.GetProjectService()
 	if err != nil {
 		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"error" : "Cannot Get Data" + err.Error(), 
@@ -26,18 +24,19 @@ func GetWorkHandler(ctx *fiber.Ctx) error  {
 }
 
 
-func CreateWorkHandler(ctx *fiber.Ctx)  error {
-	uuidGen := uuid.New()
-	var work model.WorkModel
 
-	if err := ctx.BodyParser(&work); err != nil{
+func CreateProjectHandler(ctx *fiber.Ctx)  error {
+	uuidGen := uuid.New()
+	var project model.ProjectModel
+
+	if err := ctx.BodyParser(&project); err != nil{
 		return ctx.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"error" : "invalid Request Body", 
 		})
 	}
-	work.Id = uuidGen.String()
+	project.Id = uuidGen.String()
 
-	err := services.CreateWorkService(work)
+	err := services.CreateProjectService(project)
 	if err != nil {
 		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"error" : err.Error(),
@@ -46,16 +45,17 @@ func CreateWorkHandler(ctx *fiber.Ctx)  error {
 
 
 	return ctx.Status(fiber.StatusOK).JSON(fiber.Map{
-		"message" : "Success Create Work Experience",
-		"data" : work,
+		"message" : "Success Create Project",
+		"data" : project,
 	})
 
 }
-func UpdateWorkHandler(ctx *fiber.Ctx) error   {
-	id := ctx.Params("id")
-	var work model.WorkModel
 
-	if err := ctx.BodyParser(&work); err != nil{
+func UpdateProjectHandler(ctx *fiber.Ctx) error   {
+	id := ctx.Params("id")
+	var project model.ProjectModel
+
+	if err := ctx.BodyParser(&project); err != nil{
 		return ctx.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"error" : "invalid Request Body", 
 		})
@@ -70,32 +70,28 @@ func UpdateWorkHandler(ctx *fiber.Ctx) error   {
 
 	updatedBody := make(map[string]interface{})
 
-	if work.Role != "" {
-		updatedBody["role"] = work.Role
+	if project.Name != "" {
+		updatedBody["name"] = project.Name
 	}
-	if work.Company != "" {
-		updatedBody["company"] = work.Company
+	if project.Description != "" {
+		updatedBody["description"] = project.Description
 	}
-	if work.Image != "" {
-		updatedBody["image"] = work.Image
+	if project.Image != "" {
+		updatedBody["image"] = project.Image
 	}
-	if work.StartDate != nil && *work.StartDate != "" {
-		updatedBody["start_date"] = *work.StartDate
+	if project.Repo != nil && *project.Repo != "" {
+		updatedBody["repo"] = *project.Repo
 	}
-	if work.EndDate != nil && *work.EndDate != "" {
-		updatedBody["end_date"] = *work.EndDate
+	if project.Demo != nil && *project.Demo != "" {
+		updatedBody["demo"] = *project.Demo
 	}
-	if len(work.Task) > 0 {
-		updatedBody["task"] = work.Task
+	if len(project.Stack) > 0 {
+		updatedBody["stack"] = project.Stack
 	}
-	if len(work.Task) > 0 {
-		updatedBody["stack"] = work.Stack
-	}
-
 
 	delete(updatedBody, "id")
 	
-	err = services.UpdateWorkService(uuid, updatedBody)
+	err = services.UpdateProjectService(uuid, updatedBody)
 	if err != nil {
 		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"error": "Error Update with Error"+ err.Error(),
@@ -104,13 +100,13 @@ func UpdateWorkHandler(ctx *fiber.Ctx) error   {
 
 
 	return ctx.Status(fiber.StatusOK).JSON(fiber.Map{
-		"message" : "Success Update Work Experience",
+		"message" : "Success Update Project",
 	})
 }
 
 
 
-func DeleteWorkHandler(ctx *fiber.Ctx) error {
+func DeleteProjectHandler(ctx *fiber.Ctx) error {
 	id := ctx.Params("id")
 
 	uuid, err := uuid.Parse(id)
@@ -120,7 +116,7 @@ func DeleteWorkHandler(ctx *fiber.Ctx) error {
 		})
 	}
 
-	err = services.DeleteWorkService(uuid)
+	err = services.DeleteProjectService(uuid)
 	if err != nil {
 		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"error": "Error Delete with Error"+ err.Error(),
@@ -129,6 +125,6 @@ func DeleteWorkHandler(ctx *fiber.Ctx) error {
 
 
 	return ctx.Status(fiber.StatusOK).JSON(fiber.Map{
-		"message" : "Success Delete Work",
+		"message" : "Success Delete Project",
 	})
 }
