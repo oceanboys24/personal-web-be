@@ -38,6 +38,8 @@ func main () {
 	routes.HeroRoute(v1Route)
 	//Stack Endpoint
 	routes.StackRoute(v1Route)
+	//Work Experience Endpoint
+	routes.WorkRoute(v1Route)
 
 	//Running Server
 	app.Listen(":3000")
