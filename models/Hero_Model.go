@@ -14,4 +14,7 @@ type HeroModel struct {
 	Location string `json:"location"`
 	IsAvailable *bool `json:"is_available"`
 	ImageUrl string `json:"image_url"`
+	Handphone string `json:"handphone"`
+	Email string `json:"email"`
+	Cv string `json:"cv"`
 }

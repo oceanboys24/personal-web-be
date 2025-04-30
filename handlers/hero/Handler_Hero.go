@@ -27,7 +27,7 @@ func HeroHandlerUpdate(ctx *fiber.Ctx) error  {
 
 	if err := ctx.BodyParser(&body); err != nil{
 		return ctx.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"error" : "invalid Request Body", 
+			"error" : "invalid Request Body" +  err.Error(), 
 		})
 	}
 
@@ -39,9 +39,17 @@ func HeroHandlerUpdate(ctx *fiber.Ctx) error  {
 	if body.Profession != "" {
 		updatedBody["profession"] = body.Profession
 	}
+	if body.Email != "" {
+		updatedBody["email"] = body.Email
+	}
+	if body.Cv != "" {
+		updatedBody["cv"] = body.Cv
+	}
+	if body.Handphone != "" {
+		updatedBody["handphone"] = body.Handphone
+	}
 
-
-	if body.Surname != "" {
+	if body.Description != "" {
 		updatedBody["description"] = body.Description
 	}
 	if body.Location != "" {
@@ -49,12 +57,12 @@ func HeroHandlerUpdate(ctx *fiber.Ctx) error  {
 	}
 
 	if body.IsAvailable != nil {
-		updatedBody["isavailable"] = *body.IsAvailable
+		updatedBody["is_available"] = *body.IsAvailable
 	}
 
 
 	if body.ImageUrl != "" {
-		updatedBody["imageurl"] = body.ImageUrl
+		updatedBody["image_url"] = body.ImageUrl
 	}
 
 
