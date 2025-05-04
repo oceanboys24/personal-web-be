@@ -8,7 +8,7 @@ type WorkModel struct {
 	Company string `json:"company"`
 	Task []string `json:"task"`
 	Stack []string `json:"stack"`
-	Image string `json:"image"`
+	Image string `json:"image_url"`
 	StartDate *string `json:"start_date"`
 	EndDate *string `json:"end_date"`
 }

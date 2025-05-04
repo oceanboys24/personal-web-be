@@ -15,4 +15,5 @@ func HeroRoute(app fiber.Router) {
 
 	heroRoute.Patch("/",middleware.CheckToken, hero.HeroHandlerUpdate)
 	heroRoute.Get("/", hero.HeroHandlerGet)
+	heroRoute.Get("/landing", hero.HeroHandlerGet)
 }
