@@ -11,7 +11,7 @@ import (
 func GetProjectService() ([]model.ProjectModel, error) {
 	var result []model.ProjectModel
 
-	err := config.SupaClient.DB.From("project").Select("*").Execute(&result)
+	err := config.SupaClient.DB.From("project").Select("*").OrderBy("created_at", "asc").Execute(&result)
 	if err != nil {
 		return nil ,err
 	}
