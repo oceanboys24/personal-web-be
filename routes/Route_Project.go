@@ -14,6 +14,7 @@ func ProjectRoute(app fiber.Router)  {
 	routeProject := app.Group("/project")
 
 	routeProject.Get("/", project.GetProjectHandler)
+	routeProject.Get("/:id", project.GetProjectHandler)
 	routeProject.Post("/", project.CreateProjectHandler)
 	routeProject.Delete("/:id", project.DeleteProjectHandler)
 	routeProject.Patch("/:id", project.UpdateProjectHandler)

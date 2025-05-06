@@ -26,6 +26,22 @@ func GetWorkHandler(ctx *fiber.Ctx) error  {
 }
 
 
+func GetWorkHandlerById(ctx *fiber.Ctx) error  {
+	id := ctx.Params("id")
+	data, err := services.GetWorkServiceById(id)
+	if err != nil {
+		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"error" : "Cannot Get Data" + err.Error(), 
+		})
+	}
+
+	return ctx.Status(fiber.StatusOK).JSON(fiber.Map{
+		"message" : "Success get Data",
+		"data" : data,
+	})
+}
+
+
 func CreateWorkHandler(ctx *fiber.Ctx)  error {
 	uuidGen := uuid.New()
 	var work model.WorkModel
@@ -57,7 +73,7 @@ func UpdateWorkHandler(ctx *fiber.Ctx) error   {
 
 	if err := ctx.BodyParser(&work); err != nil{
 		return ctx.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"error" : "invalid Request Body", 
+			"error" : "invalid Request Body" + err.Error(), 
 		})
 	}
 
@@ -77,7 +93,7 @@ func UpdateWorkHandler(ctx *fiber.Ctx) error   {
 		updatedBody["company"] = work.Company
 	}
 	if work.Image != "" {
-		updatedBody["image"] = work.Image
+		updatedBody["image_url"] = work.Image
 	}
 	if work.StartDate != nil && *work.StartDate != "" {
 		updatedBody["start_date"] = *work.StartDate
@@ -88,7 +104,7 @@ func UpdateWorkHandler(ctx *fiber.Ctx) error   {
 	if len(work.Task) > 0 {
 		updatedBody["task"] = work.Task
 	}
-	if len(work.Task) > 0 {
+	if len(work.Stack) > 0 {
 		updatedBody["stack"] = work.Stack
 	}
 

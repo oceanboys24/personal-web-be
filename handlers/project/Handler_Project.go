@@ -23,6 +23,21 @@ func GetProjectHandler(ctx *fiber.Ctx) error  {
 	})
 }
 
+func GetProjectHandlerById(ctx *fiber.Ctx) error  {
+	id := ctx.Params("id")
+	data, err := services.GetProjectServiceById(id)
+	if err != nil {
+		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"error" : "Cannot Get Data" + err.Error(), 
+		})
+	}
+
+	return ctx.Status(fiber.StatusOK).JSON(fiber.Map{
+		"message" : "Success get Data",
+		"data" : data,
+	})
+}
+
 
 
 func CreateProjectHandler(ctx *fiber.Ctx)  error {
@@ -57,7 +72,7 @@ func UpdateProjectHandler(ctx *fiber.Ctx) error   {
 
 	if err := ctx.BodyParser(&project); err != nil{
 		return ctx.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"error" : "invalid Request Body", 
+			"error" : "invalid Request Body" + err.Error(), 
 		})
 	}
 
@@ -77,7 +92,7 @@ func UpdateProjectHandler(ctx *fiber.Ctx) error   {
 		updatedBody["description"] = project.Description
 	}
 	if project.Image != "" {
-		updatedBody["image"] = project.Image
+		updatedBody["image_url"] = project.Image
 	}
 	if project.Repo != nil && *project.Repo != "" {
 		updatedBody["repo"] = *project.Repo
@@ -85,7 +100,7 @@ func UpdateProjectHandler(ctx *fiber.Ctx) error   {
 	if project.Demo != nil && *project.Demo != "" {
 		updatedBody["demo"] = *project.Demo
 	}
-	if len(project.Stack) > 0 {
+	if len(project.Stack) >= 0 {
 		updatedBody["stack"] = project.Stack
 	}
 

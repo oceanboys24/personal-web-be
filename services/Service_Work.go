@@ -13,7 +13,18 @@ import (
 func GetWorkService() ([]model.WorkModel, error) {
 	var result []model.WorkModel
 
-	err := config.SupaClient.DB.From("work_experience").Select("*").Execute(&result)
+	err := config.SupaClient.DB.From("work_experience").Select("*").OrderBy("created_at", "asc").Execute(&result)
+	if err != nil {
+		return nil ,err
+	}
+
+	return result , nil
+	
+}
+func GetWorkServiceById(id string) ([]model.WorkModel, error) {
+	var result []model.WorkModel
+
+	err := config.SupaClient.DB.From("work_experience").Select("*").Eq("id", id).Execute(&result)
 	if err != nil {
 		return nil ,err
 	}

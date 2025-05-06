@@ -14,6 +14,7 @@ func WorkRoute(app fiber.Router)  {
 
 
 	workRoute.Get("/", work.GetWorkHandler)
+	workRoute.Get("/:id", work.GetWorkHandlerById)
 	workRoute.Post("/", work.CreateWorkHandler)
 	workRoute.Delete("/:id", work.DeleteWorkHandler)
 	workRoute.Patch("/:id", work.UpdateWorkHandler)

@@ -23,11 +23,11 @@ func UploadHandler(c *fiber.Ctx) error {
 			"message" : "cannot open file",
 		})
 	}	
-	if !utils.IsImage(srcFile) {
-		return c.Status(500).JSON(fiber.Map{
-			"message" : "Must Be Image File",
-		})
-	}
+	// if !utils.IsImage(srcFile) {
+	// 	return c.Status(500).JSON(fiber.Map{
+	// 		"message" : "Must Be Image File",
+	// 	})
+	// }
 	
 	resultDownload , err := utils.UploadFile("personal-web",file.Filename, srcFile, file.Size, file.Header.Get("content-type"))
 	if err != nil {

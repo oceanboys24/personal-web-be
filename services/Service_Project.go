@@ -20,6 +20,18 @@ func GetProjectService() ([]model.ProjectModel, error) {
 	
 }
 
+func GetProjectServiceById(id string) (*model.ProjectModel, error) {
+	var result model.ProjectModel
+
+	err := config.SupaClient.DB.From("project").Select("*").Execute(&result)
+	if err != nil {
+		return nil ,err
+	}
+
+	return &result , nil
+	
+}
+
 
 func CreateProjectService(project model.ProjectModel)  error {
 	var result []model.ProjectModel
