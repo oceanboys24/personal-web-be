@@ -43,6 +43,6 @@ func main () {
 	routes.ProjectRoute(v1Route)
 
 	//Running Server
-	app.Listen(":3000")
+	app.Listen("0.0.0.0:3000")
 
 }	
