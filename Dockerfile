@@ -9,7 +9,7 @@ RUN go mod download
 
 # Copy semua source code
 COPY . .
-COPY .env .env
+# COPY .env .env
 
 # Build the application
 RUN go build -o app
@@ -24,7 +24,8 @@ WORKDIR /root/
 
 # Copy the built binary from builder
 COPY --from=builder /app/app .
-COPY --from=builder /app/.env .env
+# COPY --from=builder /app/.env .env
+
 
 # Command to run
 CMD ["./app"]

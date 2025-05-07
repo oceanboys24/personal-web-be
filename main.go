@@ -11,8 +11,6 @@ import (
 
 
 func main () {
-	//Load Env
-	config.LoadEnv()
 	//Connect Supabase 
 	config.ConnectSupabase()	
 	//Connnect Supabase Storage
