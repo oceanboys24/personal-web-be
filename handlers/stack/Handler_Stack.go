@@ -51,6 +51,50 @@ func CreateStackHandler(ctx *fiber.Ctx)  error {
 
 }
 
+
+func UpdateStackHandler(ctx *fiber.Ctx) error   {
+	id := ctx.Params("id")
+	var stack model.StackModel
+
+	if err := ctx.BodyParser(&stack); err != nil{
+		return ctx.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"error" : "invalid Request Body" + err.Error(), 
+		})
+	}
+
+	uuid, err := uuid.Parse(id)
+	if err != nil {
+		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"error": "Cannot Parse UUID with Error"+ err.Error(),
+		})
+	}
+
+	updatedBody := make(map[string]interface{})
+
+	if stack.Name != "" {
+		updatedBody["name"] = stack.Name
+	}
+	if stack.Image != "" {
+		updatedBody["image_url"] = stack.Image
+	}
+
+	delete(updatedBody, "id")
+	
+	err = services.UpdateStackService(uuid, updatedBody)
+	if err != nil {
+		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"error": "Error Update with Error"+ err.Error(),
+		})
+	}
+
+
+	return ctx.Status(fiber.StatusOK).JSON(fiber.Map{
+		"message" : "Success Update Edit Stack",
+	})
+}
+
+
+
 func DeleteStackHandler(ctx *fiber.Ctx) error {
 	id := ctx.Params("id")
 

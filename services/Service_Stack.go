@@ -33,6 +33,18 @@ func CreateStackService(stack model.StackModel)  error {
 	return nil
 }
 
+func UpdateStackService(id uuid.UUID,stack map[string]interface{}) error {
+	finalId := id.String()
+	var result map[string]interface{}
+	err := config.SupaClient.DB.From("stack").Update(stack).Eq("id", finalId).Execute(&result) 
+	if err != nil {
+		return nil
+	}
+
+	return nil
+}
+
+
 
 func DeleteStackService(id uuid.UUID) error {
 	finalId := id.String()

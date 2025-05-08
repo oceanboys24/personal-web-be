@@ -1,8 +1,8 @@
 package routes
 
 import (
-
 	"personal-web-be/handlers/stack"
+	"personal-web-be/middleware"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -14,6 +14,7 @@ func StackRoute(app fiber.Router) {
 
 	//Method Stack
 	stackRoute.Get("/", stack.GetStackHandler)
-	stackRoute.Post("/", stack.CreateStackHandler)
-	stackRoute.Delete("/:id", stack.DeleteStackHandler)
+	stackRoute.Post("/",middleware.CheckToken, stack.CreateStackHandler)
+	stackRoute.Patch("/:id", middleware.CheckToken, stack.UpdateStackHandler)
+	stackRoute.Delete("/:id",middleware.CheckToken, stack.DeleteStackHandler)
 }	
