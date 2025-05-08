@@ -10,7 +10,7 @@ import (
 func GetStackService() ( []model.StackModel,error) {
 	var result []model.StackModel
 
-	err := config.SupaClient.DB.From("stack").Select("*").Execute(&result)
+	err := config.SupaClient.DB.From("stack").Select("*").OrderBy("created_at", "asc").Execute(&result)
 	if err != nil {
 		return nil, err
 	}
