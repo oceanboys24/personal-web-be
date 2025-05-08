@@ -15,9 +15,6 @@ func main () {
 	config.ConnectSupabase()	
 	//Connnect Supabase Storage
 	config.ConnectStorage()
-
-
-
 	//init Fiber 
 	app := fiber.New()
 
@@ -42,5 +39,4 @@ func main () {
 
 	//Running Server
 	app.Listen("0.0.0.0:3000")
-
 }	

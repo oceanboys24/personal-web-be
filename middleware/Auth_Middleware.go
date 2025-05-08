@@ -14,7 +14,7 @@ func CheckToken(ctx *fiber.Ctx) error {
 	authHeader := ctx.Get("Authorization")
 	if authHeader == "" {
 			return ctx.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
-				"error" : "Missing Header",
+				"error" : "Token Not Found",
 			})
 	}
 
