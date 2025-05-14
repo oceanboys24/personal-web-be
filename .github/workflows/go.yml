@@ -33,4 +33,4 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           push: true
-          tags: nini24/personal-web-be:1.0
+          tags: nini24/personal-web-be:1.1
