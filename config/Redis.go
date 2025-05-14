@@ -3,6 +3,7 @@ package config
 import (
 	"context"
 	"log"
+	"os"
 
 	"github.com/redis/go-redis/v9"
 )
@@ -15,7 +16,8 @@ var (
 )
 
 func ConnectRedis() {
-	opt, err := redis.ParseURL("rediss://default:AYcdAAIjcDEwNmQ2MDFjMjQ4NTE0YzU4OGZjNTA3NmI5ZWI5NDM0YnAxMA@literate-badger-34589.upstash.io:6379")
+	dsn := os.Getenv("REDIS_URL")
+	opt, err := redis.ParseURL(dsn)
 	if err != nil {
 		log.Fatalf("Fail to parse Redis URL: %v", err)
 	}

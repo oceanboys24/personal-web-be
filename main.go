@@ -1,7 +1,6 @@
 package main
 
 import (
-	"log"
 	"personal-web-be/config"
 	"personal-web-be/middleware"
 
@@ -9,15 +8,10 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
-	"github.com/joho/godotenv"
 )
 
 
 func main () {
-	err := godotenv.Load()
-	if err != nil {
-		log.Println("error" , err)
-	}
 	//Connect Redis
 	config.ConnectRedis()
 
@@ -54,5 +48,5 @@ func main () {
 	routes.ActivityRoute(v1Route)
 
 	//Running Server
-	app.Listen(":8080")
+	app.Listen("0.0.0.0:8080")
 }	
