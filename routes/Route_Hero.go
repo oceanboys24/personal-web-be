@@ -12,7 +12,6 @@ import (
 func HeroRoute(app fiber.Router) {
 	heroRoute := app.Group("/hero")
 
-
 	heroRoute.Patch("/",middleware.CheckToken, hero.HeroHandlerUpdate)
 	heroRoute.Get("/", hero.HeroHandlerGet)
 	heroRoute.Get("/landing", hero.HeroHandlerGet)

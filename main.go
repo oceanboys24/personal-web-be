@@ -1,16 +1,26 @@
 package main
 
 import (
+	"log"
 	"personal-web-be/config"
+	"personal-web-be/middleware"
 
 	"personal-web-be/routes"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
+	"github.com/joho/godotenv"
 )
 
 
 func main () {
+	err := godotenv.Load()
+	if err != nil {
+		log.Println("error" , err)
+	}
+	//Connect Redis
+	config.ConnectRedis()
+
 	//Connect Supabase 
 	config.ConnectSupabase()	
 	//Connnect Supabase Storage
@@ -24,6 +34,8 @@ func main () {
 	//Endpoint V1 
 	v1Route := app.Group("/v1")
 
+	v1Route.Use(middleware.ActiviyLogger())
+
 	//Login Endpoint
 	routes.LoginRoute(v1Route)	
 	//Upload Endpoint
@@ -36,7 +48,11 @@ func main () {
 	routes.WorkRoute(v1Route)
 	//Project Endpoint
 	routes.ProjectRoute(v1Route)
+	//Visitor Endpoint
+	routes.VisitorRoute(v1Route)
+	//Activity Endpoint
+	routes.ActivityRoute(v1Route)
 
 	//Running Server
-	app.Listen("0.0.0.0:3000")
+	app.Listen(":8080")
 }	

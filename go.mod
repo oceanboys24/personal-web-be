@@ -13,6 +13,8 @@ require (
 	github.com/MicahParks/jwkset v0.8.0 // indirect
 	github.com/MicahParks/keyfunc v1.9.0 // indirect
 	github.com/MicahParks/keyfunc/v3 v3.3.11 // indirect
+	github.com/cespare/xxhash/v2 v2.3.0 // indirect
+	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
 	github.com/dustin/go-humanize v1.0.1 // indirect
 	github.com/go-ini/ini v1.67.0 // indirect
 	github.com/goccy/go-json v0.10.5 // indirect
@@ -21,6 +23,7 @@ require (
 	github.com/minio/crc64nvme v1.0.1 // indirect
 	github.com/minio/md5-simd v1.1.2 // indirect
 	github.com/minio/minio-go/v7 v7.0.91 // indirect
+	github.com/redis/go-redis/v9 v9.8.0 // indirect
 	github.com/rs/xid v1.6.0 // indirect
 	golang.org/x/time v0.9.0 // indirect
 )
